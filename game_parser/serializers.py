@@ -1,4 +1,5 @@
 from typing import Iterator
+
 from game_parser.exceptions import GameParseException
 
 
@@ -42,11 +43,14 @@ class Game:
         - GameParseException: If the raw line cannot be parsed correctly.
         """
         teams = raw_line.strip().split(',')
-        if len(teams) != 2:
+        if len(teams) != 2:  # Only support 2 team games
             raise GameParseException(raw_line)
 
         self.team_1: Team = self._parse_team(teams[0])
         self.team_2: Team = self._parse_team(teams[1])
+        # Duplicate team name is not supported
+        if self.team_1.name == self.team_2.name:
+            raise GameParseException(raw_line)
 
     def _parse_team(self, raw_team: str) -> Team:
         """
@@ -63,11 +67,13 @@ class Game:
         """
         try:
             team_data = raw_team.strip().rsplit(' ', 1)
+            # Splitting the team name and score, expecting 2 results only
             if len(team_data) != 2:
                 raise GameParseException(raw_team)
             name = team_data[0]
+            # Invalid (NaN) score will raise exception
             score = int(team_data[1])
-            if score < 0:
+            if score < 0:  # Negative scores are not supported
                 raise GameParseException(raw_team)
             return Team(name, score)
         except:

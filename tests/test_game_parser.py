@@ -1,8 +1,9 @@
-from typing import Counter
 import unittest
+from typing import Counter
+
 from game_parser import build_ranking_table, sort_ranking_table
-from game_parser.serializers import Game
 from game_parser.exceptions import GameParseException
+from game_parser.serializers import Game
 
 
 class TestGameParser(unittest.TestCase):
@@ -24,6 +25,11 @@ class TestGameParser(unittest.TestCase):
 
     def test_game_serializer_nan_scores(self):
         raw_line = 'Lions 0, Snakes A'
+        with self.assertRaises(GameParseException):
+            Game(raw_line)
+
+    def test_game_serializer_duplicate_team(self):
+        raw_line = 'Lions 0, Lions 2'
         with self.assertRaises(GameParseException):
             Game(raw_line)
 

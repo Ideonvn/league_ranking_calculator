@@ -1,5 +1,6 @@
-from typing import List, Tuple
 from collections import Counter
+from typing import List, Tuple
+
 from game_parser.serializers import parse_input
 
 

@@ -1,5 +1,7 @@
-from argparse import Namespace, ArgumentParser
-from game_parser import build_ranking_table, sort_ranking_table, print_sorted_ranking_table
+from argparse import ArgumentParser, Namespace
+
+from game_parser import (build_ranking_table, print_sorted_ranking_table,
+                         sort_ranking_table)
 
 
 def _init_args() -> Namespace:

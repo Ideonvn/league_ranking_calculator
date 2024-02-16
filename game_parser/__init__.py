@@ -41,5 +41,11 @@ def print_sorted_ranking_table(teams: List[Tuple[str, int]]) -> None:
     Parameters:
     - teams (List[Tuple[str, int]]): The ranking table to be printed.
     """
-    for rank, (team, points) in enumerate(teams, start=1):
-        print(f"{rank}. {team}, {points} pts")
+    current_rank = 0
+    prev_points = None
+    for team, points in teams:
+        if points != prev_points:
+            current_rank += 1
+        pts_str = "pt" if points == 1 else "pts"
+        print(f"{current_rank}. {team}, {points} {pts_str}")
+        prev_points = points

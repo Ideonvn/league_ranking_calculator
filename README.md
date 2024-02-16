@@ -29,8 +29,9 @@ Example output format:
 ```
 1. TeamA, 6 pts
 2. TeamC, 4 pts
-3. TeamD, 4 pts
-4. TeamB, 3 pts
+2. TeamD, 4 pts
+3. TeamB, 1 pt
+4. TeamE, 0 pts
 ```
 
 > An example of the expected output can be found in `tests/samples/sample_output.txt`.

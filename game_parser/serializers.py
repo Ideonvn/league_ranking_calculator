@@ -3,6 +3,11 @@ from typing import Iterator
 from game_parser.exceptions import GameParseException
 
 
+WIN_POINTS = 3
+DRAW_POINTS = 1
+LOSE_POINTS = 0
+
+
 class Team:
     """Class to represent a team."""
 
@@ -16,7 +21,7 @@ class Team:
         """
         self.name = name
         self.score = score
-        self.points = 0
+        self.points = LOSE_POINTS
 
 
 class Game:
@@ -84,12 +89,12 @@ class Game:
         Calculate points for each team based on the game result.
         """
         if self.team_1.score > self.team_2.score:
-            self.team_1.points = 3
+            self.team_1.points = WIN_POINTS
         elif self.team_1.score < self.team_2.score:
-            self.team_2.points = 3
+            self.team_2.points = WIN_POINTS
         else:
-            self.team_1.points = 1
-            self.team_2.points = 1
+            self.team_1.points = DRAW_POINTS
+            self.team_2.points = DRAW_POINTS
 
 
 def parse_input(filename: str) -> Iterator[Game]:

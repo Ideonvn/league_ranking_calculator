@@ -1,7 +1,9 @@
 import unittest
+from io import StringIO
 from typing import Counter
+from unittest.mock import patch
 
-from game_parser import build_ranking_table, sort_ranking_table
+from game_parser import build_ranking_table, sort_ranking_table, print_sorted_ranking_table
 from game_parser.exceptions import GameParseException
 from game_parser.serializers import Game
 
@@ -62,6 +64,16 @@ class TestGameParser(unittest.TestCase):
         self.assertEqual(sorted_ranking_table[0][0], 'B')
         self.assertEqual(sorted_ranking_table[1][0], 'A')
         self.assertEqual(sorted_ranking_table[2][0], 'C')
+
+    def test_game_sample_input_output(self):
+        sample_input = 'tests/samples/sample_input.txt'
+        sample_output = 'tests/samples/sample_output.txt'
+        ranking_table = build_ranking_table(sample_input)
+        sorted_ranking_table = sort_ranking_table(ranking_table)
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            print_sorted_ranking_table(sorted_ranking_table)
+            with open(sample_output, 'r') as file:
+                self.assertEqual(fake_out.getvalue(), file.read())
 
 
 if __name__ == '__main__':
